@@ -237,7 +237,7 @@ class statscatalog extends Module
                 $html .= '
 					<tr' . ($irow++ % 2 ? ' class="alt_row"' : '') . '>
 						<td>' . $product['id_product'] . '</td>
-						<td>' . $product['name'] . '</td>
+						<td>' . htmlspecialchars($product['name'], ENT_QUOTES, 'UTF-8') . '</td>
 						<td class="left">
 							<div class="btn-group btn-group-action">
 								<a class="btn btn-default" href="' . Tools::safeOutput($this->context->link->getAdminLink('AdminProducts', true, [], ['updateproduct' => 1, 'id_product' => $product['id_product']])) . '" target="_blank">
