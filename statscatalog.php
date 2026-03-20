@@ -55,6 +55,11 @@ class statscatalog extends Module
         $this->ps_versions_compliancy = ['min' => '1.7.6.0', 'max' => _PS_VERSION_];
     }
 
+    /**
+     * Install the module and register the stats dashboard hook.
+     *
+     * @return bool True on successful installation, false otherwise
+     */
     public function install()
     {
         return parent::install() && $this->registerHook('displayAdminStatsModules');
@@ -147,6 +152,16 @@ class statscatalog extends Module
         return ['total' => Db::getInstance((bool) _PS_USE_SQL_SLAVE_)->NumRows(), 'result' => $result];
     }
 
+    /**
+     * Render the catalogue health summary on the admin statistics dashboard.
+     *
+     * Queries for products without images, descriptions, prices, and category counts,
+     * presenting the results as an HTML summary table. Supports optional category filtering.
+     *
+     * @param array $params Hook parameters passed by PrestaShop (unused)
+     *
+     * @return string HTML output for the statistics widget
+     */
     public function hookDisplayAdminStatsModules($params)
     {
         $categories = Category::getCategories($this->context->language->id, true, false);
