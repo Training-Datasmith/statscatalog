@@ -82,6 +82,7 @@ class statscatalog extends Module
 		LEFT JOIN `' . _DB_PREFIX_ . 'page_viewed` pv ON pv.`id_page` = pa.`id_page`
 		' . $this->join . '
 		WHERE product_shop.`active` = 1
+		AND pt.`name` IN ("product.php", "product")
 		' . $this->where);
     }
 
@@ -157,7 +158,7 @@ class statscatalog extends Module
 
         $result1 = $this->getQuery1();
         $total = $result1['total'];
-        $average_price = $result1['average_price'];
+        $average_price = (float) $result1['average_price'];
         $total_pictures = $result1['images'];
         $average_pictures = $total ? $total_pictures / $total : 0;
 
@@ -171,7 +172,7 @@ class statscatalog extends Module
         $total_page_viewed = $this->getTotalPageViewed();
         $average_viewed = $total ? ($total_page_viewed / $total) : 0;
         $conversion = number_format((float) ($total_page_viewed ? ($total_bought / $total_page_viewed) : 0), 2, '.', '');
-        if ($conversion_reverse = number_format((float) ($total_bought ? ($total_page_viewed / $total_bought) : 0), 2, '.', '')) {
+        if ((float) ($conversion_reverse = number_format((float) ($total_bought ? ($total_page_viewed / $total_bought) : 0), 2, '.', ''))) {
             $conversion .= $this->trans('(1 purchase / %d visits)', [$conversion_reverse], 'Modules.Statscatalog.Admin');
         }
 
