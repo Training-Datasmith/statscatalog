@@ -67,7 +67,7 @@ class StatsCatalogGuardTest extends StatsCatalogTestCase
 
     private function assertNoPhpDiagnostic($output, $label)
     {
-        $pattern = '/(^|\n)(Notice|Warning|Deprecated|Strict Standards|Parse error|Fatal error):/';
+        $pattern = '/(Notice|Warning|Deprecated|Strict Standards|Parse error|Fatal error):/';
         $this->assertNotRegExp($pattern, $output, $label);
     }
 }

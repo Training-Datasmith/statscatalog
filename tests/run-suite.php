@@ -50,7 +50,7 @@ if (!$phar || !is_readable($phar)) {
     exit(1);
 }
 
-$diagnosticPattern = '/(^|\n)(Notice|Warning|Deprecated|Strict Standards|Parse error|Fatal error):/';
+$diagnosticPattern = '/(Notice|Warning|Deprecated|Strict Standards|Parse error|Fatal error):/';
 $phpIni = '-d error_reporting=-1 -d display_errors=1 -d display_startup_errors=1';
 
 function run_phpunit_once($phar, $phpIni, $bootstrap, $files, $label)
@@ -100,7 +100,7 @@ function run_phpunit_once($phar, $phpIni, $bootstrap, $files, $label)
         fwrite(STDERR, $combined);
         exit(1);
     }
-    if (preg_match('/\b(Skipped|Risky|Incomplete|Warning:)\b/', $combined)) {
+    if (preg_match('/\b(Skipped|Risky|Incomplete)\b/', $combined)) {
         fwrite(STDERR, "Undesired PHPUnit status in {$label}\n");
         fwrite(STDERR, $combined);
         exit(1);
